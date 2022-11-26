@@ -1,9 +1,31 @@
 version: '3'
 services:
-  backend:
-    image: node:alpine
-    working_dir: /home/app
-    command: ["node", "index.js"]
+  php:
+     build:
+      context: .
+      target: app_php
+     depends_on:
+      - mysql
+     restart: unless-stopped
+     healthcheck:
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+
+  node:
+     build:
+      context: .
+      target: app_node
+     restart: unless-stopped
+  
+  react:
+     build:
+      context: .
+      target: app_react
+     depends_on:
+      - node
+     restart: unless-stopped
 
   phpmyadmin:
       image: phpmyadmin
@@ -21,15 +43,31 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example
+    volumes:
+      - "./data:/var/lib/mysql:rw"
 
   redis:
-    image: 'bitnami/redis:latest'
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-    networks:
-      - app-network
+     image: "redis:alpine"
+     command: redis-server --requirepass admin0ADMIN
+     ports:
+      - "6379:6379"
+     volumes:
+      - $PWD/redis-data:/var/lib/redis
+      - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
+     environment:
+      - REDIS_REPLICATION_MODE=master
+     networks:
+       node_net:
+         ipv4_address: 172.28.1.4
 
   maildev:
-    image: maildev/maildev
-    ports:
-      - "1080:1080"
+     image: maildev/maildev
+     ports:
+       - "1080:1080"
+       
+networks:
+  node_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
