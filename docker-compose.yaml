@@ -18,6 +18,8 @@ services:
       context: .
       target: app_node
      restart: unless-stopped
+     ports:
+        - 3000:3000
   
   react:
      build:
@@ -64,7 +66,7 @@ services:
      image: maildev/maildev
      ports:
        - "1080:1080"
-       
+
 networks:
   node_net:
     ipam:

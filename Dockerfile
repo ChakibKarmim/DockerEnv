@@ -13,10 +13,10 @@ WORKDIR /srv/app
 
 RUN apk add --update nodejs npm && \
     apk add --update npm
-# RUN npm -v in case you want to see npm version
+RUN npm -v in case you want to see npm version
 RUN npm install express
-# RUN npm ls in case you want to list packages installed with npm
-
+RUN npm ls in case you want to list packages installed with npm
+CMD ["node", "server.js"]
 
 FROM php:${PHP_VERSION}-fpm-alpine as app_php
 
