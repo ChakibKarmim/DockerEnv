@@ -19,7 +19,7 @@ services:
       target: app_node
      restart: on-failure
      ports:
-        - 3000:3000
+        - 4000:4000
 
   react:
      build:
@@ -28,6 +28,8 @@ services:
      depends_on:
       - node
      restart: unless-stopped
+     ports:
+        - 3000:3000
 
   phpmyadmin:
       image: phpmyadmin
