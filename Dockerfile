@@ -41,4 +41,4 @@ WORKDIR /srv/app
 
 ENV PATH /app/node_modules/.bin:$PATH
 
-CMD ["npm", "start"]
+CMD ["npm", "init" , "react-app", "my-app"]
