@@ -21,13 +21,13 @@ services:
      ports:
         - 3000:3000
 
-  # react:
-  #    build:
-  #     context: .
-  #     target: app_react
-  #    depends_on:
-  #     - node
-  #    restart: unless-stopped
+  react:
+     build:
+      context: .
+      target: app_react
+     depends_on:
+      - node
+     restart: unless-stopped
 
   phpmyadmin:
       image: phpmyadmin
