@@ -36,8 +36,7 @@ WORKDIR /var/www/symfonyapplication
 
 COPY ./symfonyapplication .
 
-
-
+EXPOSE 3001
 
 #*****************************************************************************************
 
