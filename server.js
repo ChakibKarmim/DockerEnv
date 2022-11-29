@@ -5,7 +5,7 @@ const express = require('express');
 //Create an app
 const app = express();
 app.get('/', (req, res) => {
-    res.send('Hello world\n');
+    res.send('Express app using node js\n');
 });
 
 //Listen port

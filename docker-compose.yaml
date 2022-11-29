@@ -1,5 +1,14 @@
 version: '3'
 services:
+
+  web:
+    image: nginx:latest
+    ports:
+        - "80:80"
+    volumes:
+        - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
+        - ./symfonyapplication:/symfonyapplication
+
   php:
      build:
       context: .
@@ -12,6 +21,7 @@ services:
       timeout: 3s
       retries: 3
       start_period: 30s
+
 
   node:
      build:
